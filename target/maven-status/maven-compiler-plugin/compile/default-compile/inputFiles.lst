@@ -1,0 +1,15 @@
+/Users/abraao.nascimento/Documents/workspace/java/temp/todoList/src/main/java/com/todoList/app/App.java
+/Users/abraao.nascimento/Documents/workspace/java/temp/todoList/src/main/java/com/todoList/app/application/port/in/task/CreateTaskUseCase.java
+/Users/abraao.nascimento/Documents/workspace/java/temp/todoList/src/main/java/com/todoList/app/application/port/in/task/DeleteTaskUseCase.java
+/Users/abraao.nascimento/Documents/workspace/java/temp/todoList/src/main/java/com/todoList/app/application/port/in/task/FindTaskUseCase.java
+/Users/abraao.nascimento/Documents/workspace/java/temp/todoList/src/main/java/com/todoList/app/application/port/in/task/ListTaskUseCase.java
+/Users/abraao.nascimento/Documents/workspace/java/temp/todoList/src/main/java/com/todoList/app/application/port/in/task/UpdateTaskUseCase.java
+/Users/abraao.nascimento/Documents/workspace/java/temp/todoList/src/main/java/com/todoList/app/application/port/out/TaskRepository.java
+/Users/abraao.nascimento/Documents/workspace/java/temp/todoList/src/main/java/com/todoList/app/application/service/CreateTaskService.java
+/Users/abraao.nascimento/Documents/workspace/java/temp/todoList/src/main/java/com/todoList/app/application/service/DeleteTaskService.java
+/Users/abraao.nascimento/Documents/workspace/java/temp/todoList/src/main/java/com/todoList/app/application/service/FindTaskService.java
+/Users/abraao.nascimento/Documents/workspace/java/temp/todoList/src/main/java/com/todoList/app/application/service/ListTaskService.java
+/Users/abraao.nascimento/Documents/workspace/java/temp/todoList/src/main/java/com/todoList/app/application/service/UpdateTaskService.java
+/Users/abraao.nascimento/Documents/workspace/java/temp/todoList/src/main/java/com/todoList/app/domain/exception/InvalidTaskException.java
+/Users/abraao.nascimento/Documents/workspace/java/temp/todoList/src/main/java/com/todoList/app/domain/model/Task.java
+/Users/abraao.nascimento/Documents/workspace/java/temp/todoList/src/main/java/com/todoList/app/infrastructure/config/MessageSourceConfig.java
