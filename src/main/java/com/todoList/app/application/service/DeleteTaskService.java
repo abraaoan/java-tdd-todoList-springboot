@@ -3,11 +3,13 @@ package com.todoList.app.application.service;
 import java.util.Locale;
 
 import org.springframework.context.MessageSource;
+import org.springframework.stereotype.Service;
 
 import com.todoList.app.application.port.in.task.DeleteTaskUseCase;
 import com.todoList.app.application.port.out.TaskRepository;
 import com.todoList.app.domain.exception.InvalidTaskException;
 
+@Service
 public class DeleteTaskService implements DeleteTaskUseCase {
     private final TaskRepository taskRepository;
     private final MessageSource messageSource;

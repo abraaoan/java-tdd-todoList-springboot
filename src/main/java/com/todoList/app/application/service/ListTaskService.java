@@ -4,12 +4,14 @@ import java.util.List;
 import java.util.Locale;
 
 import org.springframework.context.MessageSource;
+import org.springframework.stereotype.Service;
 
 import com.todoList.app.application.port.in.task.ListTaskUseCase;
 import com.todoList.app.application.port.out.TaskRepository;
 import com.todoList.app.domain.exception.InvalidTaskException;
 import com.todoList.app.domain.model.Task;
 
+@Service
 public class ListTaskService implements ListTaskUseCase {
     private final TaskRepository taskRepository;
     private final MessageSource messageSource;
