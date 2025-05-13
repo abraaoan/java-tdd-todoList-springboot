@@ -3,21 +3,38 @@ package com.todoList.app.adapter.controller;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.todoList.app.adapter.controller.dto.CreateTaskRequest;
+import com.todoList.app.adapter.controller.dto.UpdateTaskRequest;
+import com.todoList.app.application.port.in.task.CreateTaskUseCase;
 import com.todoList.app.application.port.in.task.FindTaskUseCase;
 import com.todoList.app.application.port.in.task.ListTaskUseCase;
+import com.todoList.app.application.port.in.task.UpdateTaskUseCase;
+import com.todoList.app.domain.exception.InvalidTaskException;
 import com.todoList.app.domain.model.Task;
 
 @RestController
 public class TaskController {
     private final FindTaskUseCase findTaskUseCase;
     private final ListTaskUseCase listTaskUseCase;
+    private final CreateTaskUseCase createTaskUseCase;
+    private final UpdateTaskUseCase updateTaskUseCase;
 
-    public TaskController(FindTaskUseCase findTaskUseCase, ListTaskUseCase listTaskUseCase) {
+    public TaskController(
+        FindTaskUseCase findTaskUseCase,
+        ListTaskUseCase listTaskUseCase,
+        CreateTaskUseCase createTaskUseCase,
+        UpdateTaskUseCase updateTaskUseCase
+    ) {
         this.findTaskUseCase = findTaskUseCase;
         this.listTaskUseCase = listTaskUseCase;
+        this.createTaskUseCase = createTaskUseCase;
+        this.updateTaskUseCase = updateTaskUseCase;
     }
 
     @GetMapping("/task")
@@ -30,5 +47,29 @@ public class TaskController {
         List<Task> taskList = listTaskUseCase.list(userId);
 
         return ResponseEntity.ok(taskList);
+    }
+
+    @PostMapping("/tasks")
+    public ResponseEntity<?> createTask(@RequestBody CreateTaskRequest request) {
+        Task task = createTaskUseCase.create(request.getTitle(), request.getUserId());
+        return ResponseEntity.ok(task);
+    }
+
+    @PatchMapping("/tasks")
+    public ResponseEntity<?> updateTask(@RequestBody UpdateTaskRequest request) {
+        Task task = new Task(
+            request.getId(), 
+            request.getTitle(), 
+            request.isCompleted(), 
+            request.getUserId()
+        );
+
+        try {
+            updateTaskUseCase.update(task);
+        } catch (InvalidTaskException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
+        return ResponseEntity.ok(task);
     }
 }
