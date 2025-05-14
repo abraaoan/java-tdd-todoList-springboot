@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.context.MessageSource;
 
 import com.todoList.app.application.port.out.TaskRepository;
-import com.todoList.app.application.service.DeleteTaskService;
+import com.todoList.app.application.service.task.DeleteTaskService;
 import com.todoList.app.domain.exception.InvalidTaskException;
 
 public class DeleteTaskServiceTest {

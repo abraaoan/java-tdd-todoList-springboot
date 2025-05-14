@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.context.MessageSource;
 
 import com.todoList.app.application.port.out.TaskRepository;
-import com.todoList.app.application.service.FindTaskService;
+import com.todoList.app.application.service.task.FindTaskService;
 import com.todoList.app.domain.exception.InvalidTaskException;
 import com.todoList.app.domain.model.Task;
 

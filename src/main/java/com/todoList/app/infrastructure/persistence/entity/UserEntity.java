@@ -26,7 +26,7 @@ public class UserEntity {
         return email;
     }
 
-    public String getPassowrd() {
+    public String getPassword() {
         return password;
     }
 

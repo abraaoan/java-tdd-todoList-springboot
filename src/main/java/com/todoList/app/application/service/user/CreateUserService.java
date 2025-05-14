@@ -3,12 +3,14 @@ package com.todoList.app.application.service.user;
 import java.util.Locale;
 
 import org.springframework.context.MessageSource;
+import org.springframework.stereotype.Service;
 
 import com.todoList.app.domain.model.User;
 import com.todoList.app.application.port.in.user.CreateUserUseCase;
 import com.todoList.app.application.port.out.UserRepository;
 import com.todoList.app.domain.exception.InvalidUserException;
 
+@Service
 public class CreateUserService implements CreateUserUseCase {
     private final UserRepository userRepository;
     private final MessageSource messageSource;
@@ -21,7 +23,8 @@ public class CreateUserService implements CreateUserUseCase {
     @Override
     public User createUser(String email, String password) throws InvalidUserException {
         validFields(email, password);
-        return userRepository.createUser(email, password);
+        User user = new User(0, email, password);
+        return userRepository.createUser(user);
     }
 
     private void validFields(String email, String password) throws InvalidUserException {

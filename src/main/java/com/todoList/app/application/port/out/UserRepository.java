@@ -6,7 +6,7 @@ import com.todoList.app.domain.model.User;
 import com.todoList.app.domain.exception.InvalidUserException;
 
 public interface UserRepository {
-    User createUser(String email, String password) throws InvalidUserException;
+    User createUser(User user) throws InvalidUserException;
     void deleteUser(int userId) throws InvalidUserException;
     User findUser(int userId);
     List<User> listUser();

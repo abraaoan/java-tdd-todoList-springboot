@@ -7,7 +7,7 @@ import static org.mockito.Mockito.verify;
 import org.junit.jupiter.api.Test;
 
 import com.todoList.app.application.port.out.TaskRepository;
-import com.todoList.app.application.service.UpdateTaskService;
+import com.todoList.app.application.service.task.UpdateTaskService;
 import com.todoList.app.domain.model.Task;
 
 public class UpdateTaskServiceTest {

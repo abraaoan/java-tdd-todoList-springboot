@@ -15,7 +15,7 @@ import static org.mockito.Mockito.*;
 import java.util.Locale;
 
 import com.todoList.app.application.port.out.TaskRepository;
-import com.todoList.app.application.service.CreateTaskService;
+import com.todoList.app.application.service.task.CreateTaskService;
 
 public class CreateTaskServiceTest {
     @Test

@@ -14,7 +14,6 @@ import com.todoList.app.infrastructure.persistence.entity.UserEntity;
 
 @Component
 public class TaskRepositoryAdapter implements TaskRepository {
-
     private final JpaTaskRepository jpaTaskRepository;
 
     public TaskRepositoryAdapter(JpaTaskRepository jpaTaskRepository) {
