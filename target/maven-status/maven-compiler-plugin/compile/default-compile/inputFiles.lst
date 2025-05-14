@@ -1,7 +1,9 @@
 /Users/abraao.nascimento/Documents/workspace/java/temp/todoList/src/main/java/com/todoList/app/App.java
-/Users/abraao.nascimento/Documents/workspace/java/temp/todoList/src/main/java/com/todoList/app/adapter/controller/TaskController.java
-/Users/abraao.nascimento/Documents/workspace/java/temp/todoList/src/main/java/com/todoList/app/adapter/controller/dto/CreateTaskRequest.java
-/Users/abraao.nascimento/Documents/workspace/java/temp/todoList/src/main/java/com/todoList/app/adapter/controller/dto/UpdateTaskRequest.java
+/Users/abraao.nascimento/Documents/workspace/java/temp/todoList/src/main/java/com/todoList/app/adapter/in/controller/TaskController.java
+/Users/abraao.nascimento/Documents/workspace/java/temp/todoList/src/main/java/com/todoList/app/adapter/in/controller/UserController.java
+/Users/abraao.nascimento/Documents/workspace/java/temp/todoList/src/main/java/com/todoList/app/adapter/in/controller/dto/CreateTaskRequest.java
+/Users/abraao.nascimento/Documents/workspace/java/temp/todoList/src/main/java/com/todoList/app/adapter/in/controller/dto/UpdateTaskRequest.java
+/Users/abraao.nascimento/Documents/workspace/java/temp/todoList/src/main/java/com/todoList/app/adapter/out/persistence/TaskRepositoryAdapter.java
 /Users/abraao.nascimento/Documents/workspace/java/temp/todoList/src/main/java/com/todoList/app/application/port/in/task/CreateTaskUseCase.java
 /Users/abraao.nascimento/Documents/workspace/java/temp/todoList/src/main/java/com/todoList/app/application/port/in/task/DeleteTaskUseCase.java
 /Users/abraao.nascimento/Documents/workspace/java/temp/todoList/src/main/java/com/todoList/app/application/port/in/task/FindTaskUseCase.java
@@ -18,6 +20,5 @@
 /Users/abraao.nascimento/Documents/workspace/java/temp/todoList/src/main/java/com/todoList/app/infrastructure/config/MessageSourceConfig.java
 /Users/abraao.nascimento/Documents/workspace/java/temp/todoList/src/main/java/com/todoList/app/infrastructure/persistence/JpaTaskRepository.java
 /Users/abraao.nascimento/Documents/workspace/java/temp/todoList/src/main/java/com/todoList/app/infrastructure/persistence/JpaUserRepository.java
-/Users/abraao.nascimento/Documents/workspace/java/temp/todoList/src/main/java/com/todoList/app/infrastructure/persistence/TaskRepositoryAdapter.java
 /Users/abraao.nascimento/Documents/workspace/java/temp/todoList/src/main/java/com/todoList/app/infrastructure/persistence/entity/TaskEntity.java
 /Users/abraao.nascimento/Documents/workspace/java/temp/todoList/src/main/java/com/todoList/app/infrastructure/persistence/entity/UserEntity.java

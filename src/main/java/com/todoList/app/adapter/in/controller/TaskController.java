@@ -1,4 +1,4 @@
-package com.todoList.app.adapter.controller;
+package com.todoList.app.adapter.in.controller;
 
 import java.util.List;
 import org.springframework.http.ResponseEntity;
@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.todoList.app.adapter.controller.dto.CreateTaskRequest;
-import com.todoList.app.adapter.controller.dto.UpdateTaskRequest;
+import com.todoList.app.adapter.in.controller.dto.CreateTaskRequest;
+import com.todoList.app.adapter.in.controller.dto.UpdateTaskRequest;
 import com.todoList.app.application.port.in.task.CreateTaskUseCase;
 import com.todoList.app.application.port.in.task.FindTaskUseCase;
 import com.todoList.app.application.port.in.task.ListTaskUseCase;

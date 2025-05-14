@@ -1,4 +1,4 @@
-package com.todoList.app.adapter.controller.dto;
+package com.todoList.app.adapter.in.controller.dto;
 
 public class CreateTaskRequest {
     private String title;

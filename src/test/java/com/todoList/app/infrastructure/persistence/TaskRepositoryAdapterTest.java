@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.todoList.app.adapter.out.persistence.TaskRepositoryAdapter;
 import com.todoList.app.domain.model.Task;
 
 @SpringBootTest
@@ -25,6 +26,5 @@ public class TaskRepositoryAdapterTest {
         // Assert
         assertNotNull(saved.getId());
         assertEquals("new task", saved.getTitle());
-
     }
 }

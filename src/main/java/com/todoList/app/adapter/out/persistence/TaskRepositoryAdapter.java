@@ -1,4 +1,4 @@
-package com.todoList.app.infrastructure.persistence;
+package com.todoList.app.adapter.out.persistence;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import com.todoList.app.application.port.out.TaskRepository;
 import com.todoList.app.domain.exception.InvalidTaskException;
 import com.todoList.app.domain.model.Task;
+import com.todoList.app.infrastructure.persistence.JpaTaskRepository;
 import com.todoList.app.infrastructure.persistence.entity.TaskEntity;
 import com.todoList.app.infrastructure.persistence.entity.UserEntity;
 
