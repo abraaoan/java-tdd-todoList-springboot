@@ -2,9 +2,9 @@ package com.todoList.app.application.service.user;
 
 import java.util.Locale;
 
-import org.apache.catalina.User;
 import org.springframework.context.MessageSource;
 
+import com.todoList.app.domain.model.User;
 import com.todoList.app.application.port.in.user.CreateUserUseCase;
 import com.todoList.app.application.port.out.UserRepository;
 import com.todoList.app.domain.exception.InvalidUserException;
@@ -35,5 +35,4 @@ public class CreateUserService implements CreateUserUseCase {
             throw new InvalidUserException(msg);
         }
     }
-    
 }

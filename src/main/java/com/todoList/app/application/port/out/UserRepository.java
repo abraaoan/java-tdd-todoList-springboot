@@ -2,8 +2,7 @@ package com.todoList.app.application.port.out;
 
 import java.util.List;
 
-import org.apache.catalina.User;
-
+import com.todoList.app.domain.model.User;
 import com.todoList.app.domain.exception.InvalidUserException;
 
 public interface UserRepository {

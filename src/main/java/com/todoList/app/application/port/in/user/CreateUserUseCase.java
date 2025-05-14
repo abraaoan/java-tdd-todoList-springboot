@@ -1,6 +1,6 @@
 package com.todoList.app.application.port.in.user;
 
-import org.apache.catalina.User;
+import com.todoList.app.domain.model.User;
 
 import com.todoList.app.domain.exception.InvalidUserException;
 
