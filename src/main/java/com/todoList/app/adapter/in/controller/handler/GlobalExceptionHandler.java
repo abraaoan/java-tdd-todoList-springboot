@@ -17,7 +17,7 @@ public class GlobalExceptionHandler {
                 .badRequest()
                 .body(Map.of("error", ex.getMessage()));
     }
-
+ 
     @ExceptionHandler(InvalidTaskException.class)
     public ResponseEntity<Map<String, String>> handleInvalidTask(InvalidTaskException ex) {
         return ResponseEntity

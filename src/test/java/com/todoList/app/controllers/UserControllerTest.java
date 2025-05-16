@@ -12,10 +12,18 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.todoList.app.adapter.in.controller.UserController;
 import com.todoList.app.application.port.in.user.CreateUserUseCase;
+import com.todoList.app.application.port.in.user.FindUserUseCase;
+import com.todoList.app.application.port.in.user.ListUserUseCase;
+import com.todoList.app.application.port.in.user.UpdateUserUseCase;
 import com.todoList.app.domain.model.User;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.List;
+
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @WebMvcTest(UserController.class)
@@ -27,6 +35,15 @@ public class UserControllerTest {
     @MockBean
     private CreateUserUseCase createUserUseCase;
 
+    @MockBean
+    private FindUserUseCase findUserUseCase;
+
+    @MockBean
+    private ListUserUseCase listUserUseCase;
+
+    @MockBean
+    private UpdateUserUseCase updateUserUsecase;
+
     @Test
     void shouldCreateUserAndReturn201() throws Exception {
         // Arrange
@@ -36,12 +53,62 @@ public class UserControllerTest {
 
         String payload = "{\"id\": 1, \"email\": \"appleseed@apple.com\", \"password\": \"123456\"}";
 
-        // Act & Arrange
+        // Act & Assert
         mockMvc.perform(post("/user")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(payload))
-            .andExpect(status().isCreated())
-            .andExpect(jsonPath("$.id").value(1))
-            .andExpect(jsonPath("$.email").value("appleseed@apple.com"));
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.email").value("appleseed@apple.com"));
+    }
+
+    @Test
+    void shouldFindUserAndReturn200() throws Exception {
+        // Arrange
+        User newUser = new User(1, "appleseed@apple.com", "123456");
+        when(findUserUseCase.findUser(any(int.class)))
+                .thenReturn(newUser);
+
+        // Act & Assert
+        mockMvc.perform(get("/user?userId=1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.email").value("appleseed@apple.com"));
+    }
+
+    @Test
+    void shouldListUserAndReturn200() throws Exception {
+        // Arrange
+        List<User> users = List.of(
+                new User(1, "appleseed@apple.com", "123456"),
+                new User(2, "pineappleseed@pineapple.com", "123456"));
+        when(listUserUseCase.listUsers())
+                .thenReturn(users);
+
+        // Act & Assert
+        mockMvc.perform(get("/users"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").value(1))
+                .andExpect(jsonPath("$[0].email").value("appleseed@apple.com"))
+                .andExpect(jsonPath("$[1].id").value(2))
+                .andExpect(jsonPath("$[1].email").value("pineappleseed@pineapple.com"));
+    }
+
+    @Test
+    void shouldUpdateUserAndReturn200() throws Exception {
+        // Arrange
+        User newUser = new User(1, "appleseed@apple.com", "123456");
+        when(updateUserUsecase.updateUser(any(User.class)))
+                .thenReturn(newUser);
+        
+        String payload = "{\"id\": 1, \"email\": \"appleseed@apple.com\", \"password\": \"123456\"}";
+
+        // Act & Assert
+        mockMvc.perform(patch("/user")
+        .contentType(MediaType.APPLICATION_JSON)
+                .content(payload))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.email").value("appleseed@apple.com"));
     }
 }

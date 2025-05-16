@@ -2,6 +2,7 @@ package com.todoList.app.adapter.in.controller;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -52,7 +53,7 @@ public class UserController {
     @PostMapping("/user")
     ResponseEntity<?> createUser(@RequestBody CreateUserRequest request) {
         User newUser = createUserUsecase.createUser(request.getEmail(), request.getPassword());
-        return ResponseEntity.ok(newUser);
+        return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
     }
 
     @PatchMapping("/user")
