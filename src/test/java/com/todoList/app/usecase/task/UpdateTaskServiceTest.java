@@ -1,4 +1,4 @@
-package com.todoList.app.usecase;
+package com.todoList.app.usecase.task;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;

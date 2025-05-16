@@ -1,4 +1,4 @@
-package com.todoList.app.usecase;
+package com.todoList.app.usecase.task;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;

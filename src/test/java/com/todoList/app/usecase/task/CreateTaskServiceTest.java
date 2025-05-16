@@ -1,4 +1,4 @@
-package com.todoList.app.usecase;
+package com.todoList.app.usecase.task;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.context.MessageSource;
