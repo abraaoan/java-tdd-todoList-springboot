@@ -3,12 +3,15 @@ package com.todoList.app.adapter.out.persistence;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.stereotype.Component;
+
 import com.todoList.app.application.port.out.UserRepository;
 import com.todoList.app.domain.exception.InvalidUserException;
 import com.todoList.app.domain.model.User;
 import com.todoList.app.infrastructure.persistence.JpaUserRepository;
 import com.todoList.app.infrastructure.persistence.entity.UserEntity;
 
+@Component
 public class UserRepositoryAdapter implements UserRepository {
     private final JpaUserRepository jpaUserRepository;
 
