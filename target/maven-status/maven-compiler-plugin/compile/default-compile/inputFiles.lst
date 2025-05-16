@@ -2,7 +2,10 @@
 /Users/abraao.nascimento/Documents/workspace/java/temp/todoList/src/main/java/com/todoList/app/adapter/in/controller/TaskController.java
 /Users/abraao.nascimento/Documents/workspace/java/temp/todoList/src/main/java/com/todoList/app/adapter/in/controller/UserController.java
 /Users/abraao.nascimento/Documents/workspace/java/temp/todoList/src/main/java/com/todoList/app/adapter/in/controller/dto/CreateTaskRequest.java
+/Users/abraao.nascimento/Documents/workspace/java/temp/todoList/src/main/java/com/todoList/app/adapter/in/controller/dto/CreateUserRequest.java
 /Users/abraao.nascimento/Documents/workspace/java/temp/todoList/src/main/java/com/todoList/app/adapter/in/controller/dto/UpdateTaskRequest.java
+/Users/abraao.nascimento/Documents/workspace/java/temp/todoList/src/main/java/com/todoList/app/adapter/in/controller/dto/UpdateUserRequest.java
+/Users/abraao.nascimento/Documents/workspace/java/temp/todoList/src/main/java/com/todoList/app/adapter/in/controller/handler/GlobalExceptionHandler.java
 /Users/abraao.nascimento/Documents/workspace/java/temp/todoList/src/main/java/com/todoList/app/adapter/out/persistence/TaskRepositoryAdapter.java
 /Users/abraao.nascimento/Documents/workspace/java/temp/todoList/src/main/java/com/todoList/app/adapter/out/persistence/UserRepositoryAdapter.java
 /Users/abraao.nascimento/Documents/workspace/java/temp/todoList/src/main/java/com/todoList/app/application/port/in/task/CreateTaskUseCase.java

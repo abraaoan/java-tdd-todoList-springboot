@@ -1,6 +1,7 @@
 package com.todoList.app.application.service.user;
 
 import java.util.Locale;
+import java.util.Optional;
 
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
@@ -23,19 +24,30 @@ public class CreateUserService implements CreateUserUseCase {
     @Override
     public User createUser(String email, String password) throws InvalidUserException {
         validFields(email, password);
+        checkUserAlreadyExist(email);
+
         User user = new User(0, email, password);
         return userRepository.createUser(user);
     }
 
     private void validFields(String email, String password) throws InvalidUserException {
         if (email.trim().isEmpty()) {
-            String msg = messageSource.getMessage("error.task.invalid_email", null, Locale.getDefault());
+            String msg = messageSource.getMessage("error.user.invalid_email", null, Locale.getDefault());
             throw new InvalidUserException(msg);
         }
 
         if (password.trim().isEmpty()) {
-            String msg = messageSource.getMessage("error.task.invalid_password", null, Locale.getDefault());
+            String msg = messageSource.getMessage("error.user.invalid_password", null, Locale.getDefault());
             throw new InvalidUserException(msg);
+        }
+    }
+
+    private void checkUserAlreadyExist(String email) throws InvalidUserException {
+        Optional<User> user = userRepository.findByEmail(email);
+
+        if (user.isPresent()) {
+            String message = messageSource.getMessage("error.user.already_exist", null, Locale.getDefault());
+            throw new InvalidUserException(message);
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.todoList.app.adapter.out.persistence;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
@@ -34,19 +35,25 @@ public class UserRepositoryAdapter implements UserRepository {
     @Override
     public User findUser(int userId) {
         User user = jpaUserRepository.findById(userId)
-        .map(this::mapToDomain)
-        .orElseThrow(() -> new InvalidUserException("User com ID \" + userId + \" não encontrada"));
+                .map(this::mapToDomain)
+                .orElseThrow(() -> new InvalidUserException("User com ID \" + userId + \" não encontrada"));
 
         return user;
     }
 
     @Override
+    public Optional<User> findByEmail(String email) {
+        return jpaUserRepository.findByEmail(email)
+                .map(this::mapToDomain);
+    }
+
+    @Override
     public List<User> listUser() {
         return jpaUserRepository
-            .findAll()
-            .stream()
-            .map(this::mapToDomain)
-            .collect(Collectors.toList());
+                .findAll()
+                .stream()
+                .map(this::mapToDomain)
+                .collect(Collectors.toList());
     }
 
     @Override
