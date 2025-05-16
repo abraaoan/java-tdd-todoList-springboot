@@ -15,23 +15,25 @@ Este projeto é uma API para gerenciamento de tarefas (TODO list), desenvolvida 
 
 ## 📁 Estrutura de pacotes
 
-com.todoList.app  
-├── domain  
-│   ├── model – Entidades do domínio (ex: Task)  
-│   └── exception – Exceções específicas da regra de negócio  
-├── application  
-│   ├── port  
-│   │   ├── in – Interfaces dos casos de uso  
-│   │   └── out – Contratos para comunicação com gateways externos  
-│   └── service – Implementações dos casos de uso  
-├── adapter  
-│   ├── in  
-│   │   └── controller – Controllers REST (entrada)  
-│   └── out  
-│       └── persistence – Adaptadores que implementam acesso a dados  
-├── infrastructure  
-│   └── persistence  
-│       └── entity – Entidades JPA como TaskEntity e UserEntity  
+```text
+com.todoList.app
+├── domain
+│   ├── model                  # Entidades de negócio
+│   └── exception              # Exceções do domínio
+├── application
+│   ├── port
+│   │   ├── in                 # Interfaces dos casos de uso (entrada)
+│   │   └── out                # Interfaces de saída (ex: TaskRepository)
+│   └── service                # Implementações dos casos de uso
+├── adapter
+│   ├── in
+│   │   └── controller         # Controllers REST (entrada)
+│   └── out
+│       └── persistence        # Adaptadores de persistência
+├── infrastructure
+│   └── persistence
+│       └── entity             # Entidades JPA (TaskEntity, UserEntity)
+```
 
 ## 🔁 Padrões adotados
 
