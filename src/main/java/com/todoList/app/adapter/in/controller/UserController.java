@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.todoList.app.adapter.in.controller.dto.CreateUserRequest;
+import com.todoList.app.adapter.in.controller.dto.DeleteUserRequest;
 import com.todoList.app.adapter.in.controller.dto.UpdateUserRequest;
 import com.todoList.app.application.port.in.user.CreateUserUseCase;
+import com.todoList.app.application.port.in.user.DeleteUserUseCase;
 import com.todoList.app.application.port.in.user.FindUserUseCase;
 import com.todoList.app.application.port.in.user.ListUserUseCase;
 import com.todoList.app.application.port.in.user.UpdateUserUseCase;
@@ -24,18 +27,21 @@ public class UserController {
     private final FindUserUseCase findUserUseCase;
     private final CreateUserUseCase createUserUsecase;
     private final ListUserUseCase listUserUseCase;
-    private final UpdateUserUseCase updateUserUsecase;
+    private final UpdateUserUseCase updateUserUseCase;
+    private final DeleteUserUseCase deleteUserUseCase;
 
     public UserController(
         FindUserUseCase findUserUseCase,
         CreateUserUseCase createUserUsecase,
         ListUserUseCase listUserUseCase,
-        UpdateUserUseCase updateUserUsecase
+        UpdateUserUseCase updateUserUseCase,
+        DeleteUserUseCase deleteUserUseCase
     ) {
         this.findUserUseCase = findUserUseCase;
         this.createUserUsecase = createUserUsecase;
         this.listUserUseCase = listUserUseCase;
-        this.updateUserUsecase = updateUserUsecase;
+        this.updateUserUseCase = updateUserUseCase;
+        this.deleteUserUseCase = deleteUserUseCase;
     }
 
     @GetMapping("/user")
@@ -59,8 +65,14 @@ public class UserController {
     @PatchMapping("/user")
     ResponseEntity<?> updateUser(@RequestBody UpdateUserRequest request) {
         User user = new User(request.getId(), request.getEmail(), request.getPassword());
-        User updatedUser = updateUserUsecase.updateUser(user);
+        User updatedUser = updateUserUseCase.updateUser(user);
 
         return ResponseEntity.ok(updatedUser);
+    }
+
+    @DeleteMapping("/user")
+    ResponseEntity<?> deleteUser(@RequestBody DeleteUserRequest request) {
+        deleteUserUseCase.deleteUser(request.getUserId());
+        return ResponseEntity.ok("user deleted");
     }
 }

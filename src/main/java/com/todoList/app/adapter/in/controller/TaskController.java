@@ -2,6 +2,7 @@ package com.todoList.app.adapter.in.controller;
 
 import java.util.List;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.todoList.app.adapter.in.controller.dto.CreateTaskRequest;
+import com.todoList.app.adapter.in.controller.dto.DeleteTaskRequest;
 import com.todoList.app.adapter.in.controller.dto.UpdateTaskRequest;
 import com.todoList.app.application.port.in.task.CreateTaskUseCase;
+import com.todoList.app.application.port.in.task.DeleteTaskUseCase;
 import com.todoList.app.application.port.in.task.FindTaskUseCase;
 import com.todoList.app.application.port.in.task.ListTaskUseCase;
 import com.todoList.app.application.port.in.task.UpdateTaskUseCase;
@@ -24,17 +27,20 @@ public class TaskController {
     private final ListTaskUseCase listTaskUseCase;
     private final CreateTaskUseCase createTaskUseCase;
     private final UpdateTaskUseCase updateTaskUseCase;
+    private final DeleteTaskUseCase deleteTaskUseCase;
 
     public TaskController(
         FindTaskUseCase findTaskUseCase,
         ListTaskUseCase listTaskUseCase,
         CreateTaskUseCase createTaskUseCase,
-        UpdateTaskUseCase updateTaskUseCase
+        UpdateTaskUseCase updateTaskUseCase,
+        DeleteTaskUseCase deleteTaskUseCase
     ) {
         this.findTaskUseCase = findTaskUseCase;
         this.listTaskUseCase = listTaskUseCase;
         this.createTaskUseCase = createTaskUseCase;
         this.updateTaskUseCase = updateTaskUseCase;
+        this.deleteTaskUseCase = deleteTaskUseCase;
     }
 
     @GetMapping("/task")
@@ -49,13 +55,13 @@ public class TaskController {
         return ResponseEntity.ok(taskList);
     }
 
-    @PostMapping("/tasks")
+    @PostMapping("/task")
     public ResponseEntity<?> createTask(@RequestBody CreateTaskRequest request) {
         Task task = createTaskUseCase.create(request.getTitle(), request.getUserId());
         return ResponseEntity.ok(task);
     }
 
-    @PatchMapping("/tasks")
+    @PatchMapping("/task")
     public ResponseEntity<?> updateTask(@RequestBody UpdateTaskRequest request) {
         Task task = new Task(
             request.getId(), 
@@ -71,5 +77,12 @@ public class TaskController {
         }
 
         return ResponseEntity.ok(task);
+    }
+
+    @DeleteMapping("/task")
+    public ResponseEntity<?> deleteTask(@RequestBody DeleteTaskRequest request) {
+        deleteTaskUseCase.delete(request.getTaskId());
+
+        return ResponseEntity.ok("Task deleted.");
     }
 }

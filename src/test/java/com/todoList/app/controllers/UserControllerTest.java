@@ -12,12 +12,14 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.todoList.app.adapter.in.controller.UserController;
 import com.todoList.app.application.port.in.user.CreateUserUseCase;
+import com.todoList.app.application.port.in.user.DeleteUserUseCase;
 import com.todoList.app.application.port.in.user.FindUserUseCase;
 import com.todoList.app.application.port.in.user.ListUserUseCase;
 import com.todoList.app.application.port.in.user.UpdateUserUseCase;
 import com.todoList.app.domain.model.User;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -43,6 +45,9 @@ public class UserControllerTest {
 
     @MockBean
     private UpdateUserUseCase updateUserUsecase;
+
+    @MockBean
+    private DeleteUserUseCase deleteUserUsecase;
 
     @Test
     void shouldCreateUserAndReturn201() throws Exception {
@@ -110,5 +115,17 @@ public class UserControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1))
                 .andExpect(jsonPath("$.email").value("appleseed@apple.com"));
+    }
+
+    @Test
+    void shouldDeleteUserAndReturn200() throws Exception {
+        // Arrange        
+        String payload = "{\"userId\": 1}";
+
+        // Act & Assert
+        mockMvc.perform(delete("/user")
+        .contentType(MediaType.APPLICATION_JSON)
+                .content(payload))
+                .andExpect(status().isOk());
     }
 }

@@ -9,6 +9,7 @@ com/todoList/app/infrastructure/persistence/TaskRepositoryAdapterTest.class
 com/todoList/app/usecase/user/DeleteTaskServiceTest.class
 com/todoList/app/usecase/task/CreateTaskServiceTest$1.class
 com/todoList/app/usecase/user/UpdateUserServiceTest.class
+com/todoList/app/controllers/TaskControllerTest.class
 com/todoList/app/infrastructure/persistence/UserRepositoryAdapterTest.class
 com/todoList/app/usecase/user/ListUserServiceTest.class
 com/todoList/app/usecase/task/DeleteTaskServiceTest.class

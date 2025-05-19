@@ -49,7 +49,7 @@ public class CreateUserServiceTest {
         UserRepository userRepository = mock(UserRepository.class);
         MessageSource messageSource = mock(MessageSource.class);
 
-        when(messageSource.getMessage(eq("error.task.invalid_email"), any(), any()))
+        when(messageSource.getMessage(eq("error.user.invalid_email"), any(), any()))
                 .thenReturn("Empty email");
         
         CreateUserService createUserService = new CreateUserService(userRepository, messageSource);
@@ -69,7 +69,7 @@ public class CreateUserServiceTest {
         UserRepository userRepository = mock(UserRepository.class);
         MessageSource messageSource = mock(MessageSource.class);
 
-        when(messageSource.getMessage(eq("error.task.invalid_password"), any(), any()))
+        when(messageSource.getMessage(eq("error.user.invalid_password"), any(), any()))
                 .thenReturn("Empty password");
         
         CreateUserService createUserService = new CreateUserService(userRepository, messageSource);

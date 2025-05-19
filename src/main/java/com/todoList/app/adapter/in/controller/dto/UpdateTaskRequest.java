@@ -6,6 +6,8 @@ public class UpdateTaskRequest {
     private Boolean completed;
     private int userId;
 
+    public UpdateTaskRequest() {}
+
     public UpdateTaskRequest(int id, String title, Boolean completed, int userId) {
         this.id = id;
         this.title = title;
