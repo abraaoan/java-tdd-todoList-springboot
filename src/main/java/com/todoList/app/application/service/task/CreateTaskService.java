@@ -4,6 +4,7 @@ import java.util.Locale;
 
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import com.todoList.app.application.port.in.task.CreateTaskUseCase;
 import com.todoList.app.application.port.out.TaskRepository;
@@ -22,7 +23,8 @@ public class CreateTaskService implements CreateTaskUseCase {
 
     @Override
     public Task create(String title, int userID) {
-        if (title == null || title.isBlank()) {
+        boolean titleIsEmpty = ObjectUtils.isEmpty(title.trim());
+        if (titleIsEmpty) {
             String msg = messageSource.getMessage("error.task.invalid_title", null, Locale.getDefault());
             throw new InvalidTaskException(msg);
         }

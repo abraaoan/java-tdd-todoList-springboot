@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.todoList.app.usecase.user.UpdateUserServiceTest
 -------------------------------------------------------------------------------
-Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.022 s -- in com.todoList.app.usecase.user.UpdateUserServiceTest
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.025 s -- in com.todoList.app.usecase.user.UpdateUserServiceTest

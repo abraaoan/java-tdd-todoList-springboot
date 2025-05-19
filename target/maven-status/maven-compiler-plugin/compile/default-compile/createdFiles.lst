@@ -24,6 +24,7 @@ com/todoList/app/infrastructure/persistence/JpaUserRepository.class
 com/todoList/app/application/service/user/ListUserService.class
 com/todoList/app/application/service/user/DeleteUserService.class
 com/todoList/app/adapter/in/controller/UserController.class
+com/todoList/app/adapter/in/controller/dto/DeleteUserRequest.class
 com/todoList/app/application/port/in/user/DeleteUserUseCase.class
 com/todoList/app/adapter/in/controller/dto/CreateTaskRequest.class
 com/todoList/app/adapter/in/controller/dto/UpdateUserRequest.class

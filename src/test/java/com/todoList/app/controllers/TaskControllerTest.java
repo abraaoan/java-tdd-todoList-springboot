@@ -48,7 +48,7 @@ public class TaskControllerTest {
     private UpdateTaskUseCase updateTaskUseCase;
 
     @Test
-    void shouldCrateTaskSuccessfully() throws Exception {
+    void shouldCreateTaskSuccessfully() throws Exception {
         // Arrange
         Task task = new Task(1, "new task", false, 1);
         when(createTaskUseCase.create(any(String.class), any(int.class)))
@@ -60,7 +60,7 @@ public class TaskControllerTest {
         mockMvc.perform(post("/task")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(payload))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.userID").value(1))
                 .andExpect(jsonPath("$.title").value("new task"));
     }
@@ -120,6 +120,6 @@ public class TaskControllerTest {
         mockMvc.perform(delete("/task")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(payload))
-                .andExpect(status().isOk());
+                .andExpect(status().isNoContent());
     }
 }

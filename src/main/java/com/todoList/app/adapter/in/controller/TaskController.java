@@ -1,6 +1,9 @@
 package com.todoList.app.adapter.in.controller;
 
 import java.util.List;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,9 +21,13 @@ import com.todoList.app.application.port.in.task.DeleteTaskUseCase;
 import com.todoList.app.application.port.in.task.FindTaskUseCase;
 import com.todoList.app.application.port.in.task.ListTaskUseCase;
 import com.todoList.app.application.port.in.task.UpdateTaskUseCase;
-import com.todoList.app.domain.exception.InvalidTaskException;
 import com.todoList.app.domain.model.Task;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+@Tag(name = "Tarefas(tasks)", description = "Lista de request para gerenciar as tasks de um user.")
 @RestController
 public class TaskController {
     private final FindTaskUseCase findTaskUseCase;
@@ -43,26 +50,31 @@ public class TaskController {
         this.deleteTaskUseCase = deleteTaskUseCase;
     }
 
-    @GetMapping("/task")
-    public ResponseEntity<?> getTask(@RequestParam("taskId") int taskId) {
+    @Operation(summary = "Retorna uma tarefa baseada no id.")
+    @GetMapping(value = "/task", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Task> getTask(@RequestParam("taskId") int taskId) {
         return ResponseEntity.ok(findTaskUseCase.findById(taskId));
     }
 
-    @GetMapping("/tasks")
-    public ResponseEntity<?> getTaskList(@RequestParam("userId") int userId) {
+    @Operation(summary = "Retorna uma tarefa baseada no user id.")
+    @GetMapping(value = "/tasks", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Task>> getTaskList(@RequestParam("userId") int userId) {
         List<Task> taskList = listTaskUseCase.list(userId);
 
         return ResponseEntity.ok(taskList);
     }
 
-    @PostMapping("/task")
-    public ResponseEntity<?> createTask(@RequestBody CreateTaskRequest request) {
+    @ApiResponse(responseCode = "201")
+    @Operation(summary = "Criar uma nova tarefa.")
+    @PostMapping(value = "/task", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Task> createTask(@RequestBody CreateTaskRequest request) {
         Task task = createTaskUseCase.create(request.getTitle(), request.getUserId());
-        return ResponseEntity.ok(task);
+        return ResponseEntity.status(HttpStatus.CREATED).body(task);
     }
 
-    @PatchMapping("/task")
-    public ResponseEntity<?> updateTask(@RequestBody UpdateTaskRequest request) {
+    @Operation(summary = "Atualiza uma tarefa.")
+    @PatchMapping(value = "/task", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Task> updateTask(@RequestBody UpdateTaskRequest request) {
         Task task = new Task(
             request.getId(), 
             request.getTitle(), 
@@ -70,19 +82,17 @@ public class TaskController {
             request.getUserId()
         );
 
-        try {
-            updateTaskUseCase.update(task);
-        } catch (InvalidTaskException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+        updateTaskUseCase.update(task);
 
         return ResponseEntity.ok(task);
     }
 
+    @ApiResponse(responseCode = "204")
+    @Operation(summary = "Apaga uma tarefa.")
     @DeleteMapping("/task")
-    public ResponseEntity<?> deleteTask(@RequestBody DeleteTaskRequest request) {
+    public ResponseEntity<String> deleteTask(@RequestBody DeleteTaskRequest request) {
         deleteTaskUseCase.delete(request.getTaskId());
 
-        return ResponseEntity.ok("Task deleted.");
+        return ResponseEntity.noContent().build();
     }
 }
