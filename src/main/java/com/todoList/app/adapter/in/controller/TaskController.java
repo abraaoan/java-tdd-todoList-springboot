@@ -58,7 +58,7 @@ public class TaskController {
         return ResponseEntity.ok(TaskMapper.toResponse(task));
     }
 
-    @Operation(summary = "Retorna uma tarefa baseada no user id.")
+    @Operation(summary = "Retorna uma lista de tarefas baseada no user id.")
     @GetMapping(value = "/tasks", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<TaskResponse>> getTaskList(@RequestParam("userId") int userId) {
         List<Task> tasks = listTaskUseCase.list(userId);
