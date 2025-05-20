@@ -126,6 +126,6 @@ public class UserControllerTest {
         mockMvc.perform(delete("/user")
         .contentType(MediaType.APPLICATION_JSON)
                 .content(payload))
-                .andExpect(status().isOk());
+                .andExpect(status().isNoContent());
     }
 }
