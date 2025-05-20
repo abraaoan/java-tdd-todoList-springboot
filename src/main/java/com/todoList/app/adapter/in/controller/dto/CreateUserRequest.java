@@ -6,6 +6,8 @@ public class CreateUserRequest {
     @NotBlank
     private String email;
     @NotBlank
+    private String name;
+    @NotBlank
     private String password;
 
     public CreateUserRequest() {
@@ -13,6 +15,10 @@ public class CreateUserRequest {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public String getPassword() {

@@ -8,6 +8,8 @@ public class UpdateUserRequest {
     @NotBlank
     private String email;
     @NotBlank
+    private String name;
+    @NotBlank
     private String password;
     
     public UpdateUserRequest() {}
@@ -18,6 +20,10 @@ public class UpdateUserRequest {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public String getPassword() {

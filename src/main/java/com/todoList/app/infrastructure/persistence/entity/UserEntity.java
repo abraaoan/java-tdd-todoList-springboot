@@ -12,8 +12,8 @@ public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     private String email;
+    private String name;
     private String password;
 
     public UserEntity() {}
@@ -24,6 +24,10 @@ public class UserEntity {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public String getPassword() {

@@ -71,16 +71,14 @@ public class UserController {
     @Operation(summary = "Cria um usuário.")
     @PostMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<UserResponse> createUser(@RequestBody CreateUserRequest request) {
-        User newUser = createUserUsecase.createUser(request.getEmail(), request.getPassword());
+        User newUser = createUserUsecase.createUser(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(UserMapper.toResponse(newUser));
     }
 
     @Operation(summary = "Atualiza um usuário.")
     @PatchMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<UserResponse> updateUser(@RequestBody UpdateUserRequest request) {
-        User user = new User(request.getId(), request.getEmail(), request.getPassword());
-        User updatedUser = updateUserUseCase.updateUser(user);
-
+        User updatedUser = updateUserUseCase.updateUser(request);
         return ResponseEntity.ok(UserMapper.toResponse(updatedUser));
     }
 

@@ -64,6 +64,12 @@ public class UserRepositoryAdapter implements UserRepository {
         return mapToDomain(updatedEntity);
     }
 
+    @Override
+    public String login(String email, String password) {
+        // TODO: Fazer aqui!
+        return "";
+    }
+
     // MAPPER
 
     private UserEntity mapToEntity(User user) {
@@ -78,6 +84,7 @@ public class UserRepositoryAdapter implements UserRepository {
         return new User(
                 entity.getId(),
                 entity.getEmail(),
+                entity.getName(),
                 entity.getPassword());
     }
 }
