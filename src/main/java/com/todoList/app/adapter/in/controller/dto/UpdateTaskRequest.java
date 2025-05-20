@@ -1,9 +1,16 @@
 package com.todoList.app.adapter.in.controller.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public class UpdateTaskRequest {
+    @NotBlank
     private int id;
+    @NotBlank
     private String title;
+    @NotNull
     private Boolean completed;
+    @NotBlank
     private int userId;
 
     public UpdateTaskRequest() {}

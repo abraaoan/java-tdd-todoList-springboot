@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.todoList.app.adapter.in.controller.dto.CreateUserRequest;
 import com.todoList.app.adapter.in.controller.dto.DeleteUserRequest;
 import com.todoList.app.adapter.in.controller.dto.UpdateUserRequest;
+import com.todoList.app.adapter.in.controller.dto.UserResponse;
+import com.todoList.app.adapter.in.controller.mapper.UserMapper;
 import com.todoList.app.application.port.in.user.CreateUserUseCase;
 import com.todoList.app.application.port.in.user.DeleteUserUseCase;
 import com.todoList.app.application.port.in.user.FindUserUseCase;
@@ -52,39 +54,40 @@ public class UserController {
 
     @Operation(summary = "Retorna um user baseada no id.")
     @GetMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<User> getUser(@RequestParam("userId") int userId) {
+    ResponseEntity<UserResponse> getUser(@RequestParam("userId") int userId) {
         User user = findUserUseCase.findUser(userId);
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok(UserMapper.toResponse(user));
     }
 
     @Operation(summary = "Retorna a lista de users.")
     @GetMapping(value = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<List<User>> getUserList() {
+    ResponseEntity<List<UserResponse>> getUserList() {
         List<User> users = listUserUseCase.listUsers();
-        return ResponseEntity.ok(users);
+        List<UserResponse> response = users.stream().map(UserMapper::toResponse).toList();
+        return ResponseEntity.ok(response);
     }
 
     @ApiResponse(responseCode = "201")
     @Operation(summary = "Cria um usuário.")
     @PostMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<User> createUser(@RequestBody CreateUserRequest request) {
+    ResponseEntity<UserResponse> createUser(@RequestBody CreateUserRequest request) {
         User newUser = createUserUsecase.createUser(request.getEmail(), request.getPassword());
-        return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
+        return ResponseEntity.status(HttpStatus.CREATED).body(UserMapper.toResponse(newUser));
     }
 
     @Operation(summary = "Atualiza um usuário.")
     @PatchMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<User> updateUser(@RequestBody UpdateUserRequest request) {
+    ResponseEntity<UserResponse> updateUser(@RequestBody UpdateUserRequest request) {
         User user = new User(request.getId(), request.getEmail(), request.getPassword());
         User updatedUser = updateUserUseCase.updateUser(user);
 
-        return ResponseEntity.ok(updatedUser);
+        return ResponseEntity.ok(UserMapper.toResponse(updatedUser));
     }
 
     @ApiResponse(responseCode = "204")
     @Operation(summary = "Apaga um usuário.")
     @DeleteMapping("/user")
-    ResponseEntity deleteUser(@RequestBody DeleteUserRequest request) {
+    ResponseEntity<String> deleteUser(@RequestBody DeleteUserRequest request) {
         deleteUserUseCase.deleteUser(request.getUserId());
         return ResponseEntity.noContent().build();
     }
