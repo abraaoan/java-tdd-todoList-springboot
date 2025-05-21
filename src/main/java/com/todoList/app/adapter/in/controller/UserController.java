@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.todoList.app.adapter.in.controller.dto.CreateUserRequest;
 import com.todoList.app.adapter.in.controller.dto.DeleteUserRequest;
+import com.todoList.app.adapter.in.controller.dto.LoginRequest;
+import com.todoList.app.adapter.in.controller.dto.LoginResponse;
 import com.todoList.app.adapter.in.controller.dto.UpdateUserRequest;
 import com.todoList.app.adapter.in.controller.dto.UserResponse;
 import com.todoList.app.adapter.in.controller.mapper.UserMapper;
@@ -22,6 +24,7 @@ import com.todoList.app.application.port.in.user.CreateUserUseCase;
 import com.todoList.app.application.port.in.user.DeleteUserUseCase;
 import com.todoList.app.application.port.in.user.FindUserUseCase;
 import com.todoList.app.application.port.in.user.ListUserUseCase;
+import com.todoList.app.application.port.in.user.LoginUseCase;
 import com.todoList.app.application.port.in.user.UpdateUserUseCase;
 import com.todoList.app.domain.model.User;
 
@@ -37,19 +40,22 @@ public class UserController {
     private final ListUserUseCase listUserUseCase;
     private final UpdateUserUseCase updateUserUseCase;
     private final DeleteUserUseCase deleteUserUseCase;
+    private final LoginUseCase loginUseCase;
 
     public UserController(
         FindUserUseCase findUserUseCase,
         CreateUserUseCase createUserUsecase,
         ListUserUseCase listUserUseCase,
         UpdateUserUseCase updateUserUseCase,
-        DeleteUserUseCase deleteUserUseCase
+        DeleteUserUseCase deleteUserUseCase,
+        LoginUseCase loginUseCase
     ) {
         this.findUserUseCase = findUserUseCase;
         this.createUserUsecase = createUserUsecase;
         this.listUserUseCase = listUserUseCase;
         this.updateUserUseCase = updateUserUseCase;
         this.deleteUserUseCase = deleteUserUseCase;
+        this.loginUseCase = loginUseCase;
     }
 
     @Operation(summary = "Retorna um user baseada no id.")
@@ -88,5 +94,14 @@ public class UserController {
     ResponseEntity<String> deleteUser(@RequestBody DeleteUserRequest request) {
         deleteUserUseCase.deleteUser(request.getUserId());
         return ResponseEntity.noContent().build();
+    }
+
+    @ApiResponse(responseCode = "200")
+    @Operation(summary = "Faz o login dp usuário.")
+    @PostMapping(value = "/user/login", produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
+        String token = loginUseCase.login(request.getEmail(), request.getPassword());
+        LoginResponse response = new LoginResponse(token, "Bearer");
+        return ResponseEntity.ok(response);
     }
 }

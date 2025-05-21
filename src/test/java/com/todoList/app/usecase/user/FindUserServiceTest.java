@@ -20,7 +20,7 @@ public class FindUserServiceTest {
         FindUserService findUserService = new FindUserService(userRepository);
 
         when(userRepository.findUser(any(int.class)))
-        .thenReturn(new User(1, "appleSeed@apple.com", "123456"));
+        .thenReturn(new User(1, "appleSeed@apple.com", "apple", "123456"));
 
         // Act
         User user = findUserService.findUser(1);

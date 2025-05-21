@@ -13,6 +13,12 @@ public class CreateUserRequest {
     public CreateUserRequest() {
     }
 
+    public CreateUserRequest(String email, String name, String password) {
+        this.email = email;
+        this.name = name;
+        this.password = password;
+    }
+
     public String getEmail() {
         return email;
     }

@@ -11,6 +11,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.todoList.app.adapter.in.controller.UserController;
+import com.todoList.app.adapter.in.controller.dto.CreateUserRequest;
+import com.todoList.app.adapter.in.controller.dto.UpdateUserRequest;
 import com.todoList.app.application.port.in.user.CreateUserUseCase;
 import com.todoList.app.application.port.in.user.DeleteUserUseCase;
 import com.todoList.app.application.port.in.user.FindUserUseCase;
@@ -52,8 +54,8 @@ public class UserControllerTest {
     @Test
     void shouldCreateUserAndReturn201() throws Exception {
         // Arrange
-        User newUser = new User(1, "appleseed@apple.com", "123456");
-        when(createUserUseCase.createUser(any(), any()))
+        User newUser = new User(1, "appleseed@apple.com", "Abraao", "123456");
+        when(createUserUseCase.createUser(any(CreateUserRequest.class)))
                 .thenReturn(newUser);
 
         String payload = "{\"id\": 1, \"email\": \"appleseed@apple.com\", \"password\": \"123456\"}";
@@ -70,7 +72,7 @@ public class UserControllerTest {
     @Test
     void shouldFindUserAndReturn200() throws Exception {
         // Arrange
-        User newUser = new User(1, "appleseed@apple.com", "123456");
+        User newUser = new User(1, "appleseed@apple.com", "Abraao", "123456");
         when(findUserUseCase.findUser(any(int.class)))
                 .thenReturn(newUser);
 
@@ -85,8 +87,8 @@ public class UserControllerTest {
     void shouldListUserAndReturn200() throws Exception {
         // Arrange
         List<User> users = List.of(
-                new User(1, "appleseed@apple.com", "123456"),
-                new User(2, "pineappleseed@pineapple.com", "123456"));
+                new User(1, "appleseed@apple.com", "Pedro", "123456"),
+                new User(2, "pineappleseed@pineapple.com", "Maria", "123456"));
         when(listUserUseCase.listUsers())
                 .thenReturn(users);
 
@@ -102,11 +104,11 @@ public class UserControllerTest {
     @Test
     void shouldUpdateUserAndReturn200() throws Exception {
         // Arrange
-        User newUser = new User(1, "appleseed@apple.com", "123456");
-        when(updateUserUsecase.updateUser(any(User.class)))
+        User newUser = new User(1, "appleseed@apple.com", "apple", "123456");
+        when(updateUserUsecase.updateUser(any(UpdateUserRequest.class)))
                 .thenReturn(newUser);
         
-        String payload = "{\"id\": 1, \"email\": \"appleseed@apple.com\", \"password\": \"123456\"}";
+        String payload = "{\"id\": 1, \"email\": \"appleseed@apple.com\", \"Abraao\" \"password\": \"123456\"}";
 
         // Act & Assert
         mockMvc.perform(patch("/user")

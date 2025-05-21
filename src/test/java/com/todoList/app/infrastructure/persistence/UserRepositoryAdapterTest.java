@@ -17,7 +17,7 @@ public class UserRepositoryAdapterTest {
     @Test
     void shouldSaveUserAndRetriveIt() {
         // Arrange
-        User newUser = new User(1, "appleseed@apple.com", "1233456");
+        User newUser = new User(1, "appleseed@apple.com", "apple", "1233456");
 
         // Act
         User createdUser = userRepository.createUser(newUser);

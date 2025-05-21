@@ -20,9 +20,9 @@ public class ListUserServiceTest {
 
         when(userRepository.listUser())
                 .thenReturn(List.of(
-                        new User(1, "appleseed@apple.com", "123456"),
-                        new User(2, "pineappleseed@pineapple.com", "123456"),
-                        new User(3, "orangeseed@orange.com", "123456")));
+                        new User(1, "appleseed@apple.com", "apple", "123456"),
+                        new User(2, "pineappleseed@pineapple.com", "pineapple", "123456"),
+                        new User(3, "orangeseed@orange.com","orange", "123456")));
 
         // Act
         List<User> users = listUserService.listUsers();

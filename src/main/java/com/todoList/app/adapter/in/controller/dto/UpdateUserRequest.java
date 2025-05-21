@@ -13,6 +13,13 @@ public class UpdateUserRequest {
     private String password;
     
     public UpdateUserRequest() {}
+
+    public UpdateUserRequest(int id, String email, String name, String password) {
+        this.id = id;
+        this.email = email;
+        this.name = name;
+        this.password = password;
+    }
     
     public int getId() {
         return id;
