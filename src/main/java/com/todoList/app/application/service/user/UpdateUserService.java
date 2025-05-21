@@ -25,27 +25,21 @@ public class UpdateUserService implements UpdateUserUseCase {
     @Override
     public User updateUser(UpdateUserRequest request) throws InvalidUserException {
         validateUser(request);
-        User user = new User(request.getId(), request.getEmail(), request.getName(), request.getPassword());
+        User user = userRepository.findUser(request.getId());
+        user.setName(request.getName());
         return userRepository.updateUser(user);
     }
 
     private void validateUser(UpdateUserRequest user) throws InvalidUserException {
-        boolean emailIsEmpty = ObjectUtils.isEmpty(user.getEmail().trim());
-        boolean passwotdIsEmpty = ObjectUtils.isEmpty(user.getPassword().trim());
-
+        boolean nameIsEmpty = ObjectUtils.isEmpty(user.getName().trim());
 
         if (user.getId() <= 0) {
             String message = messageSource.getMessage("error.user.invalid_id", null, Locale.getDefault());
             throw new InvalidUserException(message);
         }
 
-        if (emailIsEmpty) {
-            String message = messageSource.getMessage("error.user.invalid_email", null, Locale.getDefault());
-            throw new InvalidUserException(message);
-        }
-
-        if (passwotdIsEmpty) {
-            String message = messageSource.getMessage("error.user.invalid_password", null, Locale.getDefault());
+        if (nameIsEmpty) {
+            String message = messageSource.getMessage("error.user.invalid_name", null, Locale.getDefault());
             throw new InvalidUserException(message);
         }
     }

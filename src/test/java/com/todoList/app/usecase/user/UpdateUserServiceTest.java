@@ -20,15 +20,21 @@ public class UpdateUserServiceTest {
         UserRepository userRepository = mock(UserRepository.class);
         MessageSource messageSource = mock(MessageSource.class);
         UpdateUserService updateUserService = new UpdateUserService(userRepository, messageSource);
+        User expectedUser = new User(1, "appleseed@apple.com", "", "123456");
 
         when(userRepository.updateUser(any(User.class)))
         .thenAnswer(invocation -> invocation.getArgument(0));
-        UpdateUserRequest request = new UpdateUserRequest(1, "appleseed@apple.com", "apple", "123456");
+
+        when(userRepository.findUser(any(int.class)))
+        .thenReturn(expectedUser);
+
+        UpdateUserRequest request = new UpdateUserRequest(1, "apple");
 
         // Act
         User user = updateUserService.updateUser(request);
 
         // Assert
+        assertEquals(user.getName(), "apple");
         assertEquals(user.getEmail(), "appleseed@apple.com");
     }
 
@@ -41,7 +47,7 @@ public class UpdateUserServiceTest {
 
         when(messageSource.getMessage(eq("error.user.invalid_id"), any(), any()))
         .thenReturn("Invalid user id");
-        UpdateUserRequest request = new UpdateUserRequest(-1, "appleseed@apple.com", "apple", "123345");
+        UpdateUserRequest request = new UpdateUserRequest(-1, "apple");
 
         // Act & Assert
         InvalidUserException exception = assertThrows(
@@ -49,46 +55,6 @@ public class UpdateUserServiceTest {
             () -> updateUserService.updateUser(request));
         
         assertEquals(exception.getMessage(), "Invalid user id");
-        verify(userRepository, never()).updateUser(any(User.class));
-    }
-
-    @Test
-    void shouldUpdateUserInvalidEmail() {
-        // Arrange
-        UserRepository userRepository = mock(UserRepository.class);
-        MessageSource  messageSource = mock(MessageSource.class);
-        UpdateUserService updateUserService = new UpdateUserService(userRepository, messageSource);
-
-        when(messageSource.getMessage(eq("error.user.invalid_email"), any(), any()))
-        .thenReturn("Invalid email");
-        UpdateUserRequest request = new UpdateUserRequest(1, "", "apple", "123567");
-
-        // Act & Assert
-        InvalidUserException exception = assertThrows(
-            InvalidUserException.class, 
-            () -> updateUserService.updateUser(request));
-        
-        assertEquals(exception.getMessage(), "Invalid email");
-        verify(userRepository, never()).updateUser(any(User.class));
-    }
-
-    @Test
-    void shouldUpdateUserInvalidPassword() {
-        // Arrange
-        UserRepository userRepository = mock(UserRepository.class);
-        MessageSource  messageSource = mock(MessageSource.class);
-        UpdateUserService updateUserService = new UpdateUserService(userRepository, messageSource);
-
-        when(messageSource.getMessage(eq("error.user.invalid_password"), any(), any()))
-        .thenReturn("Invalid password");
-        UpdateUserRequest request = new UpdateUserRequest(1, "appleseed@apple.com", "apple", "");
-
-        // Act & Assert
-        InvalidUserException exception = assertThrows(
-            InvalidUserException.class, 
-            () -> updateUserService.updateUser(request));
-        
-        assertEquals(exception.getMessage(), "Invalid password");
         verify(userRepository, never()).updateUser(any(User.class));
     }
 }

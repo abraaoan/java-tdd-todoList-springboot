@@ -6,34 +6,20 @@ public class UpdateUserRequest {
     @NotBlank
     private int id;
     @NotBlank
-    private String email;
-    @NotBlank
     private String name;
-    @NotBlank
-    private String password;
     
     public UpdateUserRequest() {}
 
-    public UpdateUserRequest(int id, String email, String name, String password) {
+    public UpdateUserRequest(int id, String name) {
         this.id = id;
-        this.email = email;
         this.name = name;
-        this.password = password;
     }
     
     public int getId() {
         return id;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public String getPassword() {
-        return password;
     }
 }

@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.context.MessageSource;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.todoList.app.domain.model.User;
@@ -18,9 +18,9 @@ import com.todoList.app.domain.exception.InvalidUserException;
 public class CreateUserService implements CreateUserUseCase {
     private final UserRepository userRepository;
     private final MessageSource messageSource;
-    private final BCryptPasswordEncoder encoder;
+    private final PasswordEncoder encoder;
 
-    public CreateUserService(UserRepository userRepository, MessageSource messageSource, BCryptPasswordEncoder encoder) {
+    public CreateUserService(UserRepository userRepository, MessageSource messageSource, PasswordEncoder encoder) {
         this.userRepository = userRepository;
         this.messageSource = messageSource;
         this.encoder = encoder;

@@ -7,12 +7,14 @@ public class UserResponse {
     private int id;
     @NotBlank
     private String email;
+    private String name;
     @NotBlank
     private String password;
 
-    public UserResponse(int id, String email, String password) {
+    public UserResponse(int id, String email, String name, String password) {
         this.id = id;
         this.email = email;
+        this.name = name;
         this.password = password;
     }
 
@@ -23,6 +25,11 @@ public class UserResponse {
     public String getEmail() {
         return email;
     }
+
+    public String getName() {
+        return name;
+    }
+
     public String getPassword() {
         return password;
     }

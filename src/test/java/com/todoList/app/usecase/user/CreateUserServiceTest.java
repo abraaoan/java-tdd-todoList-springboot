@@ -12,7 +12,7 @@ import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.context.MessageSource;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.todoList.app.adapter.in.controller.dto.CreateUserRequest;
 import com.todoList.app.application.port.out.UserRepository;
@@ -26,7 +26,7 @@ public class CreateUserServiceTest {
         // Arrange
         UserRepository userRepository = mock(UserRepository.class);
         MessageSource messageSource = mock(MessageSource.class);
-        BCryptPasswordEncoder encoder = mock(BCryptPasswordEncoder.class);
+        PasswordEncoder encoder = mock(PasswordEncoder.class);
 
         User expectedUser = new User(0, "appleseed@apple.com", "apple", "123456");
 
@@ -50,7 +50,7 @@ public class CreateUserServiceTest {
         // Arrange
         UserRepository userRepository = mock(UserRepository.class);
         MessageSource messageSource = mock(MessageSource.class);
-        BCryptPasswordEncoder encoder = mock(BCryptPasswordEncoder.class);
+        PasswordEncoder encoder = mock(PasswordEncoder.class);
 
         when(messageSource.getMessage(eq("error.user.invalid_email"), any(), any()))
                 .thenReturn("Empty email");
@@ -72,7 +72,7 @@ public class CreateUserServiceTest {
         // Arrange
         UserRepository userRepository = mock(UserRepository.class);
         MessageSource messageSource = mock(MessageSource.class);
-        BCryptPasswordEncoder encoder = mock(BCryptPasswordEncoder.class);
+        PasswordEncoder encoder = mock(PasswordEncoder.class);
 
         when(messageSource.getMessage(eq("error.user.invalid_password"), any(), any()))
                 .thenReturn("Empty password");
