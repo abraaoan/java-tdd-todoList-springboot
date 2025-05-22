@@ -34,108 +34,108 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 public class UserControllerTest {
-        @Autowired
-        private MockMvc mockMvc;
+    @Autowired
+    private MockMvc mockMvc;
 
-        @Autowired
-        private JwtTokenProvider jwtService;
+    @Autowired
+    private JwtTokenProvider jwtService;
 
-        @MockBean
-        private CreateUserUseCase createUserUseCase;
-        @MockBean
-        private FindUserUseCase findUserUseCase;
-        @MockBean
-        private ListUserUseCase listUserUseCase;
-        @MockBean
-        private UpdateUserUseCase updateUserUsecase;
-        @MockBean
-        private DeleteUserUseCase deleteUserUsecase;
+    @MockBean
+    private CreateUserUseCase createUserUseCase;
+    @MockBean
+    private FindUserUseCase findUserUseCase;
+    @MockBean
+    private ListUserUseCase listUserUseCase;
+    @MockBean
+    private UpdateUserUseCase updateUserUsecase;
+    @MockBean
+    private DeleteUserUseCase deleteUserUsecase;
 
-        @Test
-        void shouldCreateUserAndReturn201() throws Exception {
-                // Arrange
-                User newUser = new User(1, "appleseed@apple.com", "Abraao", "123456");
-                when(createUserUseCase.createUser(any(CreateUserRequest.class)))
-                                .thenReturn(newUser);
+    @Test
+    void shouldCreateUserAndReturn201() throws Exception {
+        // Arrange
+        User newUser = new User(1, "appleseed@apple.com", "apple", "123456", "user");
+        when(createUserUseCase.createUser(any(CreateUserRequest.class)))
+                .thenReturn(newUser);
 
-                String payload = "{\"id\": 1, \"email\": \"appleseed@apple.com\", \"password\": \"123456\"}";
-                String token = jwtService.generateToken(new User(1, "joaquim@jo.com", "apple", "123456"));
+        String payload = "{\"email\": \"appleseed@apple.com\", \"name\": \"apple\", \"password\": \"123456\", \"role\": \"user\"}";
+        String token = jwtService.generateToken(new User(1, "appleseed@apple.com", "apple", "123456", "user"));
 
-                // Act & Assert
-                mockMvc.perform(post("/user")
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .header("Authorization", "Bearer " + token)
-                                .content(payload))
-                                .andExpect(status().isCreated())
-                                .andExpect(jsonPath("$.id").value(1))
-                                .andExpect(jsonPath("$.email").value("appleseed@apple.com"));
-        }
+        // Act & Assert
+        mockMvc.perform(post("/user")
+                .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", "Bearer " + token)
+                .content(payload))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.email").value("appleseed@apple.com"));
+    }
 
-        @Test
-        void shouldFindUserAndReturn200() throws Exception {
-                // Arrange
-                User newUser = new User(1, "appleseed@apple.com", "Abraao", "123456");
-                when(findUserUseCase.findUser(any(int.class)))
-                                .thenReturn(newUser);
-                String token = jwtService.generateToken(new User(1, "joaquim@jo.com", "apple", "123456"));
+    @Test
+    void shouldFindUserAndReturn200() throws Exception {
+        // Arrange
+        User newUser = new User(1, "appleseed@apple.com", "apple", "123456", "user");
+        when(findUserUseCase.findUser(any(int.class)))
+                .thenReturn(newUser);
+        String token = jwtService.generateToken(new User(1, "appleseed@apple.com", "apple", "123456", "user"));
 
-                // Act & Assert
-                mockMvc.perform(get("/user?userId=1").header("Authorization", "Bearer " + token))
-                                .andExpect(status().isOk())
-                                .andExpect(jsonPath("$.id").value(1))
-                                .andExpect(jsonPath("$.email").value("appleseed@apple.com"));
-        }
+        // Act & Assert
+        mockMvc.perform(get("/user?userId=1").header("Authorization", "Bearer " + token))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.email").value("appleseed@apple.com"));
+    }
 
-        @Test
-        void shouldListUserAndReturn200() throws Exception {
-                // Arrange
-                List<User> users = List.of(
-                                new User(1, "appleseed@apple.com", "Pedro", "123456"),
-                                new User(2, "pineappleseed@pineapple.com", "Maria", "123456"));
-                when(listUserUseCase.listUsers()).thenReturn(users);
-                String token = jwtService.generateToken(new User(1, "joaquim@jo.com", "apple", "123456"));
+    @Test
+    void shouldListUserAndReturn200() throws Exception {
+        // Arrange
+        List<User> users = List.of(
+                new User(1, "appleseed@apple.com", "Pedro", "123456", "user"),
+                new User(2, "pineappleseed@pineapple.com", "Maria", "123456", "user"));
+        when(listUserUseCase.listUsers()).thenReturn(users);
+        String token = jwtService.generateToken(new User(1, "appleseed@apple.com", "apple", "123456", "user"));
 
-                // Act & Assert
-                mockMvc.perform(get("/users").header("Authorization", "Bearer " + token))
-                                .andExpect(status().isOk())
-                                .andExpect(jsonPath("$[0].id").value(1))
-                                .andExpect(jsonPath("$[0].email").value("appleseed@apple.com"))
-                                .andExpect(jsonPath("$[1].id").value(2))
-                                .andExpect(jsonPath("$[1].email").value("pineappleseed@pineapple.com"));
-        }
+        // Act & Assert
+        mockMvc.perform(get("/users").header("Authorization", "Bearer " + token))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").value(1))
+                .andExpect(jsonPath("$[0].email").value("appleseed@apple.com"))
+                .andExpect(jsonPath("$[1].id").value(2))
+                .andExpect(jsonPath("$[1].email").value("pineappleseed@pineapple.com"));
+    }
 
-        @Test
-        void shouldUpdateUserAndReturn200() throws Exception {
-                // Arrange
-                User newUser = new User(1, "appleseed@apple.com", "apple", "123456");
-                when(updateUserUsecase.updateUser(any(UpdateUserRequest.class)))
-                                .thenReturn(newUser);
+    @Test
+    void shouldUpdateUserAndReturn200() throws Exception {
+        // Arrange
+        User newUser = new User(1, "appleseed@apple.com", "apple", "123456", "user");
+        when(updateUserUsecase.updateUser(any(UpdateUserRequest.class)))
+                .thenReturn(newUser);
 
-                String payload = "{\"id\": 1, \"name\": \"apple\"}";
-                String token = jwtService.generateToken(new User(1, "joaquim@jo.com", "apple", "123456"));
+        String payload = "{\"id\": 1, \"name\": \"apple\"}";
+        String token = jwtService.generateToken(new User(1, "appleseed@apple.com", "apple", "123456", "user"));
 
-                // Act & Assert
-                mockMvc.perform(patch("/user")
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .header("Authorization", "Bearer " + token)
-                                .content(payload))
-                                .andExpect(status().isOk())
-                                .andExpect(jsonPath("$.id").value(1))
-                                .andExpect(jsonPath("$.name").value("apple"))
-                                .andExpect(jsonPath("$.email").value("appleseed@apple.com"));
-        }
+        // Act & Assert
+        mockMvc.perform(patch("/user")
+                .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", "Bearer " + token)
+                .content(payload))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.name").value("apple"))
+                .andExpect(jsonPath("$.email").value("appleseed@apple.com"));
+    }
 
-        @Test
-        void shouldDeleteUserAndReturn200() throws Exception {
-                // Arrange
-                String payload = "{\"userId\": 1}";
-                String token = jwtService.generateToken(new User(1, "joaquim@jo.com", "apple", "123456"));
+    @Test
+    void shouldDeleteUserAndReturn200() throws Exception {
+        // Arrange
+        String payload = "{\"userId\": 1}";
+        String token = jwtService.generateToken(new User(1, "appleseed@apple.com", "apple", "123456", "user"));
 
-                // Act & Assert
-                mockMvc.perform(delete("/user")
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .header("Authorization", "Bearer " + token)
-                                .content(payload))
-                                .andExpect(status().isNoContent());
-        }
+        // Act & Assert
+        mockMvc.perform(delete("/user")
+                .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", "Bearer " + token)
+                .content(payload))
+                .andExpect(status().isNoContent());
+    }
 }

@@ -1,15 +1,14 @@
 package com.todoList.app.application.service.user;
 
-import java.util.Locale;
 import java.util.Optional;
 
 import org.apache.commons.lang3.ObjectUtils;
-import org.springframework.context.MessageSource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.todoList.app.application.port.in.user.LoginUseCase;
 import com.todoList.app.application.port.out.UserRepository;
+import com.todoList.app.application.port.out.helper.MessageHelper;
 import com.todoList.app.application.port.out.security.JwtTokenProvider;
 import com.todoList.app.domain.exception.InvalidUserException;
 import com.todoList.app.domain.model.User;
@@ -18,16 +17,16 @@ import com.todoList.app.domain.model.User;
 public class LoginService implements LoginUseCase {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder encoder;
-    private final MessageSource messageSource;
+    private final MessageHelper messageHelper;
     private final JwtTokenProvider jwtTokenProvider;
 
     public LoginService(
         UserRepository userRepository, 
         BCryptPasswordEncoder encoder, 
-        MessageSource messageSource,
+        MessageHelper messageHelper,
         JwtTokenProvider jwtTokenProvider) {
         this.userRepository = userRepository;
-        this.messageSource = messageSource;
+        this.messageHelper = messageHelper;
         this.encoder = encoder;
         this.jwtTokenProvider = jwtTokenProvider;
     }
@@ -37,7 +36,7 @@ public class LoginService implements LoginUseCase {
         Optional<User> user = userRepository.findByEmail(email);
 
         if (!user.isPresent()) {
-            String message = messageSource.getMessage("error.user.login_erro",null, Locale.getDefault());
+            String message = messageHelper.get("error.user.login_erro");
             throw new InvalidUserException(message);
         }
 
@@ -51,7 +50,7 @@ public class LoginService implements LoginUseCase {
         boolean passwordMatch = encoder.matches(password, user.getPassword());
 
         if (passwordIsEmpty || !passwordMatch) {
-            String message = messageSource.getMessage("error.user.login_erro",null, Locale.getDefault());
+            String message = messageHelper.get("error.user.login_erro");
             throw new InvalidUserException(message);
         }
     }

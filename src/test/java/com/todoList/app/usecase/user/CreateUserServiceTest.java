@@ -11,11 +11,11 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.context.MessageSource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.todoList.app.adapter.in.controller.dto.CreateUserRequest;
 import com.todoList.app.application.port.out.UserRepository;
+import com.todoList.app.application.port.out.helper.MessageHelper;
 import com.todoList.app.application.service.user.CreateUserService;
 import com.todoList.app.domain.exception.InvalidUserException;
 import com.todoList.app.domain.model.User;
@@ -25,16 +25,16 @@ public class CreateUserServiceTest {
     void shouldCreateUserSuccessfully() {
         // Arrange
         UserRepository userRepository = mock(UserRepository.class);
-        MessageSource messageSource = mock(MessageSource.class);
+        MessageHelper messageHelper = mock(MessageHelper.class);
         PasswordEncoder encoder = mock(PasswordEncoder.class);
 
-        User expectedUser = new User(0, "appleseed@apple.com", "apple", "123456");
+        User expectedUser = new User(1, "appleseed@apple.com", "apple", "123456", "user");
 
         when(userRepository.createUser(any(User.class)))
                 .thenAnswer(invocation -> invocation.getArgument(0));
 
-        CreateUserService createUserService = new CreateUserService(userRepository, messageSource, encoder);
-        CreateUserRequest request = new CreateUserRequest("appleseed@apple.com", "apple", "123456");
+        CreateUserService createUserService = new CreateUserService(userRepository, messageHelper, encoder);
+        CreateUserRequest request = new CreateUserRequest("appleseed@apple.com", "apple", "123456", "user");
 
         // Act
         User createdUser = createUserService.createUser(request);
@@ -49,14 +49,14 @@ public class CreateUserServiceTest {
     void shouldCreateUserEmptyEmailField() {
         // Arrange
         UserRepository userRepository = mock(UserRepository.class);
-        MessageSource messageSource = mock(MessageSource.class);
+        MessageHelper messageHelper = mock(MessageHelper.class);
         PasswordEncoder encoder = mock(PasswordEncoder.class);
 
-        when(messageSource.getMessage(eq("error.user.invalid_email"), any(), any()))
+        when(messageHelper.get(eq("error.user.invalid_email")))
                 .thenReturn("Empty email");
         
-        CreateUserService createUserService = new CreateUserService(userRepository, messageSource, encoder);
-        CreateUserRequest request = new CreateUserRequest("", "apple", "123456");
+        CreateUserService createUserService = new CreateUserService(userRepository, messageHelper, encoder);
+        CreateUserRequest request = new CreateUserRequest("", "apple", "123456", "user");
 
         // Act & Assert
         InvalidUserException invalidUserException = assertThrows(
@@ -71,14 +71,14 @@ public class CreateUserServiceTest {
     void shouldCreateUserEmptyPasswordField() {
         // Arrange
         UserRepository userRepository = mock(UserRepository.class);
-        MessageSource messageSource = mock(MessageSource.class);
+        MessageHelper messageHelper = mock(MessageHelper.class);
         PasswordEncoder encoder = mock(PasswordEncoder.class);
 
-        when(messageSource.getMessage(eq("error.user.invalid_password"), any(), any()))
+        when(messageHelper.get(eq("error.user.invalid_password")))
                 .thenReturn("Empty password");
         
-        CreateUserService createUserService = new CreateUserService(userRepository, messageSource, encoder);
-        CreateUserRequest request = new CreateUserRequest("appleseed@apple.com", "apple", "");
+        CreateUserService createUserService = new CreateUserService(userRepository, messageHelper, encoder);
+        CreateUserRequest request = new CreateUserRequest("appleseed@apple.com", "apple", "", "user");
 
         // Act & Assert
         InvalidUserException invalidUserException = assertThrows(

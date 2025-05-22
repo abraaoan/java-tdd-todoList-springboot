@@ -9,7 +9,7 @@ public class CreateUserRequest {
     private String email;
     @NotBlank
     private String name;
-    @Size(min = 6,  message = "{error.user.too_short}")
+    @Size(min = 6, message = "{error.user.too_short}")
     private String password;
     @NotBlank
     private String role;
@@ -17,7 +17,7 @@ public class CreateUserRequest {
     public CreateUserRequest() {
     }
 
-    public CreateUserRequest(String email, String name, String password, String Role, String role) {
+    public CreateUserRequest(String email, String name, String password, String role) {
         this.email = email;
         this.name = name;
         this.password = password;

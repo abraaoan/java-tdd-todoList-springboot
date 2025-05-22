@@ -1,25 +1,23 @@
 package com.todoList.app.application.service.user;
 
-import java.util.Locale;
-
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 import com.todoList.app.adapter.in.controller.dto.UpdateUserRequest;
 import com.todoList.app.application.port.in.user.UpdateUserUseCase;
 import com.todoList.app.application.port.out.UserRepository;
+import com.todoList.app.application.port.out.helper.MessageHelper;
 import com.todoList.app.domain.exception.InvalidUserException;
 import com.todoList.app.domain.model.User;
 
 @Service
 public class UpdateUserService implements UpdateUserUseCase {
     private final UserRepository userRepository;
-    private final MessageSource messageSource;
+    private final MessageHelper messageHelper;
 
-    public UpdateUserService(UserRepository userRepository, MessageSource messageSource) {
+    public UpdateUserService(UserRepository userRepository, MessageHelper messageHelper) {
         this.userRepository = userRepository;
-        this.messageSource = messageSource;
+        this.messageHelper = messageHelper;
     }
 
     @Override
@@ -35,12 +33,12 @@ public class UpdateUserService implements UpdateUserUseCase {
         boolean nameIsEmpty = ObjectUtils.isEmpty(user.getName().trim());
 
         if (user.getId() <= 0) {
-            String message = messageSource.getMessage("error.user.invalid_id", null, Locale.getDefault());
+            String message = messageHelper.get("error.user.invalid_id");
             throw new InvalidUserException(message);
         }
 
         if (nameIsEmpty) {
-            String message = messageSource.getMessage("error.user.invalid_name", null, Locale.getDefault());
+            String message = messageHelper.get("error.user.invalid_name");
             throw new InvalidUserException(message);
         }
     }

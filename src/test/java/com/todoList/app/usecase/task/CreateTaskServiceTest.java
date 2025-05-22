@@ -58,9 +58,8 @@ public class CreateTaskServiceTest {
 
         // Act & Assert
         InvalidTaskException exception = assertThrows(
-            InvalidTaskException.class,
-            () -> createTaskService.create("   ", 1)
-        );
+                InvalidTaskException.class,
+                () -> createTaskService.create("   ", 1));
 
         assertEquals(expectedMessage, exception.getMessage());
         verify(messageSource).getMessage(eq("error.task.invalid_title"), any(), any(Locale.class));
@@ -81,9 +80,8 @@ public class CreateTaskServiceTest {
 
         // Act & Assert
         InvalidTaskException exception = assertThrows(
-            InvalidTaskException.class,
-            () -> createTaskService.create("Title #1", -1)
-        );
+                InvalidTaskException.class,
+                () -> createTaskService.create("Title #1", -1));
 
         assertEquals(expectedMessage, exception.getMessage());
         verify(messageSource).getMessage(eq("error.user.not_found"), any(), any(Locale.class));

@@ -1,28 +1,26 @@
 package com.todoList.app.application.service.user;
 
-import java.util.Locale;
-
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
 import com.todoList.app.application.port.in.user.DeleteUserUseCase;
 import com.todoList.app.application.port.out.UserRepository;
+import com.todoList.app.application.port.out.helper.MessageHelper;
 import com.todoList.app.domain.exception.InvalidUserException;
 
 @Service
 public class DeleteUserService implements DeleteUserUseCase {
     private final UserRepository userRepository;
-    private final MessageSource messageSource;
+    private final MessageHelper messageHelper;
 
-    public DeleteUserService(UserRepository userRepository, MessageSource messageSource) {
+    public DeleteUserService(UserRepository userRepository, MessageHelper messageHelper) {
         this.userRepository = userRepository;
-        this.messageSource = messageSource;
+        this.messageHelper = messageHelper;
     }
 
     @Override
     public void deleteUser(int userId) throws InvalidUserException {
         if (userId <= 0) {
-            String message = messageSource.getMessage("error.user.invalid_id", null, Locale.getDefault());
+            String message = messageHelper.get("error.user.invalid_id");
             throw new InvalidUserException(message);
         }
 

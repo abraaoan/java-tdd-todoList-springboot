@@ -10,9 +10,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.context.MessageSource;
 
 import com.todoList.app.application.port.out.UserRepository;
+import com.todoList.app.application.port.out.helper.MessageHelper;
 import com.todoList.app.application.service.user.DeleteUserService;
 import com.todoList.app.domain.exception.InvalidUserException;
 
@@ -21,8 +21,8 @@ public class DeleteTaskServiceTest {
     void souldDeleteSuccessfully() {
         // Arrange
         UserRepository userRepository = mock(UserRepository.class);
-        MessageSource messageSource = mock(MessageSource.class);
-        DeleteUserService deleteUserService = new DeleteUserService(userRepository, messageSource);
+        MessageHelper messageHelper = mock(MessageHelper.class);
+        DeleteUserService deleteUserService = new DeleteUserService(userRepository, messageHelper);
 
         // Act
         deleteUserService.deleteUser(1);
@@ -35,10 +35,10 @@ public class DeleteTaskServiceTest {
     void souldDeleteInvalidUserId() {
         // Arrange
         UserRepository userRepository = mock(UserRepository.class);
-        MessageSource messageSource = mock(MessageSource.class);
-        DeleteUserService deleteUserService = new DeleteUserService(userRepository, messageSource);
+        MessageHelper messageHelper = mock(MessageHelper.class);
+        DeleteUserService deleteUserService = new DeleteUserService(userRepository, messageHelper);
 
-        when(messageSource.getMessage(eq("error.user.invalid_id"), any(), any()))
+        when(messageHelper.get(eq("error.user.invalid_id")))
         .thenReturn("Invalid user id");
 
         // Act & Assert

@@ -13,11 +13,11 @@ import com.todoList.app.domain.model.User;
 public class UserRepositoryAdapterTest {
     @Autowired
     UserRepository userRepository;
-    
+
     @Test
     void shouldSaveUserAndRetriveIt() {
         // Arrange
-        User newUser = new User(1, "appleseed@apple.com", "apple", "1233456");
+        User newUser = new User(1, "appleseed@apple.com", "apple", "123456", "user");
 
         // Act
         User createdUser = userRepository.createUser(newUser);

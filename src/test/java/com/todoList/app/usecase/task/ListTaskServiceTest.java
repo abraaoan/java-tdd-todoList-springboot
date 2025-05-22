@@ -24,12 +24,10 @@ public class ListTaskServiceTest {
 
         ListTaskService listTaskService = new ListTaskService(taskRepository, messageSource);
         when(listTaskService.list(userID)).thenReturn(
-            List.of(
-                new Task(1, "title #0", false, userID),
-                new Task(2, "title #1", false, userID),
-                new Task(3, "title #2", false, userID)
-            )
-        );
+                List.of(
+                        new Task(1, "title #0", false, userID),
+                        new Task(2, "title #1", false, userID),
+                        new Task(3, "title #2", false, userID)));
 
         // Act
         List<Task> tasks = listTaskService.list(userID);
@@ -48,12 +46,11 @@ public class ListTaskServiceTest {
         ListTaskService listTaskService = new ListTaskService(taskRepository, messageSource);
 
         when(messageSource.getMessage(eq("error.user.not_found"), any(), any()))
-        .thenReturn("Invalid code");
+                .thenReturn("Invalid code");
 
         // Act & Assert
         InvalidTaskException exception = assertThrows(
-            InvalidTaskException.class, () -> listTaskService.list(-1)
-        );
+                InvalidTaskException.class, () -> listTaskService.list(-1));
 
         assertEquals("Invalid code", exception.getMessage());
         verify(taskRepository, never()).list(anyInt());

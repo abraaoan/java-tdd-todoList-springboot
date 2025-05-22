@@ -29,7 +29,7 @@ public class FindTaskServiceTest {
         int taskID = 1;
 
         when(findTaskService.findById(taskID))
-        .thenReturn(new Task(1, "Title #1", false, 1));
+                .thenReturn(new Task(1, "Title #1", false, 1));
 
         // Act
         Task task = findTaskService.findById(taskID);
@@ -49,15 +49,14 @@ public class FindTaskServiceTest {
         String expectedMessage = "ID da tarefa inválido";
 
         when(messageSource.getMessage(eq("error.task.invalid_id"), any(), any()))
-        .thenReturn(expectedMessage);
-        
+                .thenReturn(expectedMessage);
+
         FindTaskService findTaskService = new FindTaskService(taskRepository, messageSource);
 
         // Act & Arrange
         InvalidTaskException exception = assertThrows(
-            InvalidTaskException.class, 
-            () -> findTaskService.findById(-1)
-        );
+                InvalidTaskException.class,
+                () -> findTaskService.findById(-1));
 
         assertEquals(expectedMessage, exception.getMessage());
         verify(taskRepository, never()).findById(anyInt());

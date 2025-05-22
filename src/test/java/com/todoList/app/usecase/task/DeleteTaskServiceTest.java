@@ -16,13 +16,13 @@ public class DeleteTaskServiceTest {
     @Test
     void shouldDeleteTaskSuccessfully() {
         // Arrange
-       TaskRepository taskRepository = mock(TaskRepository.class);
-       MessageSource messageSource = mock(MessageSource.class);
-       int taksID = 1;
+        TaskRepository taskRepository = mock(TaskRepository.class);
+        MessageSource messageSource = mock(MessageSource.class);
+        int taksID = 1;
 
-       // Act
-       DeleteTaskService deleteTaskService = new DeleteTaskService(taskRepository, messageSource);
-       deleteTaskService.delete(taksID);
+        // Act
+        DeleteTaskService deleteTaskService = new DeleteTaskService(taskRepository, messageSource);
+        deleteTaskService.delete(taksID);
 
         // Assert
         verify(taskRepository).delete(taksID);
@@ -36,21 +36,20 @@ public class DeleteTaskServiceTest {
 
         String message = "Wroong ID";
         when(messageSource.getMessage(eq("error.task.invalid_id"), any(), any()))
-        .thenReturn(message);
+                .thenReturn(message);
 
         DeleteTaskService deleteTaskService = new DeleteTaskService(taskRepository, messageSource);
 
         // Act & Assert
         InvalidTaskException exception = assertThrows(
-            InvalidTaskException.class, 
-            () -> deleteTaskService.delete(-1)
-        );
-        
+                InvalidTaskException.class,
+                () -> deleteTaskService.delete(-1));
+
         assertEquals(message, exception.getMessage());
         verify(taskRepository, never()).delete(anyInt());
     }
 
-    @Test 
+    @Test
     void shouldDeleteTaskWrongRepoMessage() {
         // Arrange
         TaskRepository taskRepository = mock(TaskRepository.class);
@@ -58,14 +57,13 @@ public class DeleteTaskServiceTest {
         DeleteTaskService deleteService = new DeleteTaskService(taskRepository, messageSource);
 
         doThrow(new RuntimeException("Falha no banco de dados."))
-            .when(taskRepository).delete(anyInt());
+                .when(taskRepository).delete(anyInt());
 
         // Act & Assert
         RuntimeException exception = assertThrows(
-            RuntimeException.class, 
-            () -> deleteService.delete(1)
-        );
-        
+                RuntimeException.class,
+                () -> deleteService.delete(1));
+
         assertEquals("Falha no banco de dados.", exception.getMessage());
         verify(taskRepository).delete(anyInt());
     }

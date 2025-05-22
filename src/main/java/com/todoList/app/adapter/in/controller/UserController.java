@@ -44,13 +44,12 @@ public class UserController {
     private final LoginUseCase loginUseCase;
 
     public UserController(
-        FindUserUseCase findUserUseCase,
-        CreateUserUseCase createUserUsecase,
-        ListUserUseCase listUserUseCase,
-        UpdateUserUseCase updateUserUseCase,
-        DeleteUserUseCase deleteUserUseCase,
-        LoginUseCase loginUseCase
-    ) {
+            FindUserUseCase findUserUseCase,
+            CreateUserUseCase createUserUsecase,
+            ListUserUseCase listUserUseCase,
+            UpdateUserUseCase updateUserUseCase,
+            DeleteUserUseCase deleteUserUseCase,
+            LoginUseCase loginUseCase) {
         this.findUserUseCase = findUserUseCase;
         this.createUserUsecase = createUserUsecase;
         this.listUserUseCase = listUserUseCase;

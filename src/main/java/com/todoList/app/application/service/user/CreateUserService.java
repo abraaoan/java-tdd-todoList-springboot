@@ -1,10 +1,8 @@
 package com.todoList.app.application.service.user;
 
-import java.util.Locale;
 import java.util.Optional;
 
 import org.apache.commons.lang3.ObjectUtils;
-import org.springframework.context.MessageSource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -12,17 +10,18 @@ import com.todoList.app.domain.model.User;
 import com.todoList.app.adapter.in.controller.dto.CreateUserRequest;
 import com.todoList.app.application.port.in.user.CreateUserUseCase;
 import com.todoList.app.application.port.out.UserRepository;
+import com.todoList.app.application.port.out.helper.MessageHelper;
 import com.todoList.app.domain.exception.InvalidUserException;
 
 @Service
 public class CreateUserService implements CreateUserUseCase {
     private final UserRepository userRepository;
-    private final MessageSource messageSource;
+    private final MessageHelper messageHelper;
     private final PasswordEncoder encoder;
 
-    public CreateUserService(UserRepository userRepository, MessageSource messageSource, PasswordEncoder encoder) {
+    public CreateUserService(UserRepository userRepository, MessageHelper messageHelper, PasswordEncoder encoder) {
         this.userRepository = userRepository;
-        this.messageSource = messageSource;
+        this.messageHelper = messageHelper;
         this.encoder = encoder;
     }
 
@@ -39,20 +38,26 @@ public class CreateUserService implements CreateUserUseCase {
         boolean emailIsEmpty = ObjectUtils.isEmpty(user.getEmail().trim());
         boolean passwordIsEmpty = ObjectUtils.isEmpty(user.getPassword().trim());
         boolean nameIsEmpty = ObjectUtils.isEmpty(user.getName().trim());
+        boolean roleIsEmpty = ObjectUtils.isEmpty(user.getRole().trim());
 
         if (emailIsEmpty) {
-            String msg = messageSource.getMessage("error.user.invalid_email", null, Locale.getDefault());
-            throw new InvalidUserException(msg);
+            String message = messageHelper.get("error.user.invalid_email");
+            throw new InvalidUserException(message);
         }
 
         if (passwordIsEmpty) {
-            String msg = messageSource.getMessage("error.user.invalid_password", null, Locale.getDefault());
-            throw new InvalidUserException(msg);
+            String message = messageHelper.get("error.user.invalid_password");
+            throw new InvalidUserException(message);
         }
 
         if (nameIsEmpty) {
-            String msg = messageSource.getMessage("error.user.invalid_name", null, Locale.getDefault());
-            throw new InvalidUserException(msg);
+            String message = messageHelper.get("error.user.invalid_name");
+            throw new InvalidUserException(message);
+        }
+
+        if (roleIsEmpty) {
+            String message = messageHelper.get("error.user.invalid_role");
+            throw new InvalidUserException(message);
         }
     }
 
@@ -60,7 +65,7 @@ public class CreateUserService implements CreateUserUseCase {
         Optional<User> user = userRepository.findByEmail(email);
 
         if (user.isPresent()) {
-            String message = messageSource.getMessage("error.user.already_exist", null, Locale.getDefault());
+            String message = messageHelper.get("error.user.already_exist");
             throw new InvalidUserException(message);
         }
     }
