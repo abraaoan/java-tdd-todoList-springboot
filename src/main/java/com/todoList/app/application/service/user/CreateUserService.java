@@ -31,7 +31,7 @@ public class CreateUserService implements CreateUserUseCase {
         validFields(request);
         checkUserAlreadyExist(request.getEmail());
         String encryptedPassword = encoder.encode(request.getPassword());
-        User user = new User(0, request.getEmail(), request.getName(), encryptedPassword);
+        User user = new User(0, request.getEmail(), request.getName(), encryptedPassword, request.getRole());
         return userRepository.createUser(user);
     }
 

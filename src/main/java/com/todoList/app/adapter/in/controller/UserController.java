@@ -31,6 +31,7 @@ import com.todoList.app.domain.model.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 
 @Tag(name = "User", description = "Lista de request dos users.")
 @RestController
@@ -76,7 +77,7 @@ public class UserController {
     @ApiResponse(responseCode = "201")
     @Operation(summary = "Cria um usuário.")
     @PostMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<UserResponse> createUser(@RequestBody CreateUserRequest request) {
+    ResponseEntity<UserResponse> createUser(@Valid @RequestBody CreateUserRequest request) {
         User newUser = createUserUsecase.createUser(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(UserMapper.toResponse(newUser));
     }

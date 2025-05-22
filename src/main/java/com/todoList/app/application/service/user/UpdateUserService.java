@@ -27,6 +27,7 @@ public class UpdateUserService implements UpdateUserUseCase {
         validateUser(request);
         User user = userRepository.findUser(request.getId());
         user.setName(request.getName());
+        user.setRole(request.getRole());
         return userRepository.updateUser(user);
     }
 

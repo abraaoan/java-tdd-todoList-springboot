@@ -72,6 +72,7 @@ public class UserRepositoryAdapter implements UserRepository {
         entity.setName(user.getName());
         entity.setEmail(user.getEmail());
         entity.setPassword(user.getPassword());
+        entity.setRole(user.getRole());
 
         return entity;
     }
@@ -81,6 +82,7 @@ public class UserRepositoryAdapter implements UserRepository {
                 entity.getId(),
                 entity.getEmail(),
                 entity.getName(),
-                entity.getPassword());
+                entity.getPassword(),
+                entity.getRole());
     }
 }
